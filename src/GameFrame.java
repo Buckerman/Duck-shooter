@@ -17,7 +17,7 @@ public class GameFrame extends JFrame {
             new HighScore();
         }));
 
-        ImageIcon icon = new ImageIcon("images/kaczki/pixel/duck-icon.png");
+        ImageIcon icon = new ImageIcon(getClass().getResource("/images/kaczki/pixel/duck-icon.png"));
         setIconImage(icon.getImage());
 
         {

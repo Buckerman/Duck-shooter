@@ -5,10 +5,8 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
-
-public class Objects {
-}
 
 class Cloud {
     Random random = new Random();
@@ -20,7 +18,7 @@ class Cloud {
     Image cloud;
 
     public Cloud() {
-        cloud = new ImageIcon("images/dodatki/chmura" + (((int) (Math.random() * 7)) + 1) + ".png").getImage();
+        cloud = new ImageIcon(getClass().getResource("/images/dodatki/chmura" + (((int) (Math.random() * 7)) + 1) + ".png")).getImage();
         this.x = ((int) (Math.random() * -100) - 50);
         this.y = ((int) (Math.random() * 600));
         width = cloud.getWidth(null);
@@ -61,7 +59,15 @@ class Cloud2{
 
     Cloud2() {
         try {
-            cloud = ImageIO.read(new File("images/dodatki/chmura" + (((int) (Math.random() * 7)) + 1) + ".png"));
+            String imagePath = "/images/dodatki/chmura" + (((int) (Math.random() * 7)) + 1) + ".png";
+            InputStream imageStream = getClass().getResourceAsStream(imagePath);
+
+            if (imageStream == null) {
+                throw new IllegalArgumentException("Resource not found: " + imagePath);
+            }
+
+            cloud = ImageIO.read(imageStream);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -118,8 +124,9 @@ class Duck {
     BufferedImage duck;
 
     public Duck() {
-        try {
-            duck = ImageIO.read(new File("images/kaczki/duck" + type + ".png"));
+        String imagePath = "/images/kaczki/duck" + type + ".png";
+        try (InputStream imageStream = getClass().getResourceAsStream(imagePath)) {
+            duck = ImageIO.read(imageStream);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -6,3 +6,4 @@ The player aims to click on the duck as many times as it takes to "shoot it down
     - purple 3
     - red 4
 Throughout play time player can also upgrade wielded weapon to deal +1 additional damage until the end of the game.
+Java 17 is required to launch.

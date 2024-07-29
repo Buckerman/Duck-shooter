@@ -10,7 +10,7 @@ public class HighScore extends JFrame {
     JList jList = new JList(model);
     JScrollPane js = new JScrollPane(jList);
     JPanel panel = new JPanel() {
-        Image bg = new ImageIcon("images/dodatki/tlo.png").getImage();
+        Image bg = new ImageIcon(getClass().getResource("/images/dodatki/tlo.png")).getImage();
 
         public void paintComponent(Graphics g) {
             g.drawImage(bg, 0, 0, this.getWidth(), this.getHeight(), null);
@@ -51,7 +51,7 @@ public class HighScore extends JFrame {
             new GameFrame();
         }));
 
-        ImageIcon icon = new ImageIcon("images/kaczki/pixel/duck-icon.png");
+        ImageIcon icon = new ImageIcon(getClass().getResource("/images/kaczki/pixel/duck-icon.png"));
         setIconImage(icon.getImage());
 
         setTitle("Duck Shooter");

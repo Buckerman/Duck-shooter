@@ -11,7 +11,7 @@ public class StartGame extends JFrame implements KeyListener {
         startEngine.setLayout(null);
         add(startEngine);
 
-        ImageIcon icon = new ImageIcon("images/kaczki/pixel/duck-icon.png");
+        ImageIcon icon = new ImageIcon(getClass().getResource("/images/kaczki/pixel/duck-icon.png"));
         setIconImage(icon.getImage());
 
         setTitle("Duck Shooter");
