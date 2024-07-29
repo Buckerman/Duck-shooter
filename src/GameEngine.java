@@ -18,7 +18,7 @@ class GameEngine extends JPanel implements Runnable {
 
         setLayout(null);
         cloudsList = new ArrayList<>();
-        bg = new ImageIcon("images/dodatki/tlo.png").getImage();
+        bg = new ImageIcon(getClass().getResource("/images/dodatki/tlo.png")).getImage();
 
         startCloudThread();
 

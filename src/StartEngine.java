@@ -101,23 +101,24 @@ class StartEngine extends JPanel implements Runnable {
 
         ducksList = new CopyOnWriteArrayList<>();
         cloudsList = new CopyOnWriteArrayList<>();
-        bgImg = new ImageIcon("images/dodatki/tlo-v1.png").getImage();
+        bgImg = new ImageIcon(getClass().getResource("/images/dodatki/tlo-v1.png")).getImage();
         heart = new BufferedImage[10];
         time = new TimeThread();
         time.setIsRunning(true);
 
         for (int i = 0; i < heartNumber; i++) {
+            InputStream inputStream = getClass().getResourceAsStream("/images/heart.png");
             try {
-                heart[i] = ImageIO.read(new File("images/heart.png"));
+                heart[i] = ImageIO.read(inputStream);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         try {
-            pistol = ImageIO.read(new File("images/bronie/pistol.png"));
-            shotgun = ImageIO.read(new File("images/bronie/shotgun.png"));
-            sniper = ImageIO.read(new File("images/bronie/sniper.png"));
-            banana = ImageIO.read(new File("images/bronie/banana.png"));
+            pistol = loadImage("/images/bronie/pistol.png");
+            shotgun = loadImage("/images/bronie/shotgun.png");
+            sniper = loadImage("/images/bronie/sniper.png");
+            banana = loadImage("/images/bronie/banana.png");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -156,6 +157,14 @@ class StartEngine extends JPanel implements Runnable {
         }));
         shoot.start();
         repaint();
+    }
+    private BufferedImage loadImage(String path) throws IOException {
+        try (InputStream imageStream = getClass().getResourceAsStream(path)) {
+            if (imageStream == null) {
+                throw new IllegalArgumentException("Resource not found: " + path);
+            }
+            return ImageIO.read(imageStream);
+        }
     }
 
     public void startDucksThread() {
@@ -255,7 +264,7 @@ class StartEngine extends JPanel implements Runnable {
         ObjectInputStream objectIn;
 
         try {
-            fileIn = new FileInputStream("data/highscore.ser");
+            fileIn = new FileInputStream("src/data/highscore.ser");
             objectIn = new ObjectInputStream(fileIn);
             scoreArrayList = (ArrayList<Score>) objectIn.readObject();
         } catch (IOException | ClassNotFoundException e) {
@@ -275,7 +284,7 @@ class StartEngine extends JPanel implements Runnable {
         }
 
         try {
-            fileOut = new FileOutputStream("data/highscore.ser");
+            fileOut = new FileOutputStream("src/data/highscore.ser");
             out = new ObjectOutputStream(fileOut);
             out.writeObject(scoreArrayList);
             out.flush();
