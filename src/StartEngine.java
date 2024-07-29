@@ -44,25 +44,42 @@ class StartEngine extends JPanel implements Runnable {
     Image bgImg;
     Thread startThread, startDucks;
 
-    JCheckBox checkBox = new JCheckBox("Easy");
-    JCheckBox checkBox1 = new JCheckBox("Medium");
-    JCheckBox checkBox2 = new JCheckBox("Hard");
-    Object[] checkBoxMode = {"Choose difficulty:", checkBox, checkBox1, checkBox2};
-
     public StartEngine() {
 
-        checkBox.setFocusable(false);
-        checkBox1.setFocusable(false);
-        checkBox2.setFocusable(false);
+        JRadioButton radioButtonEasy = new JRadioButton("Easy");
+        JRadioButton radioButtonMedium = new JRadioButton("Medium");
+        JRadioButton radioButtonHard = new JRadioButton("Hard");
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JRadioButton source = (JRadioButton) e.getSource();
+                radioButtonEasy.setSelected(source == radioButtonEasy);
+                radioButtonMedium.setSelected(source == radioButtonMedium);
+                radioButtonHard.setSelected(source == radioButtonHard);
+            }
+        };
 
-        JOptionPane.showMessageDialog(null, checkBoxMode, null, JOptionPane.INFORMATION_MESSAGE);
-        if (checkBox1.isSelected()) {
+        radioButtonEasy.addActionListener(actionListener);
+        radioButtonMedium.addActionListener(actionListener);
+        radioButtonHard.addActionListener(actionListener);
+
+        JPanel radioButtonMode = new JPanel();
+        radioButtonMode.add(radioButtonEasy);
+        radioButtonMode.add(radioButtonMedium);
+        radioButtonMode.add(radioButtonHard);
+
+        JOptionPane.showMessageDialog(null, radioButtonMode, "Select Difficulty", JOptionPane.INFORMATION_MESSAGE);
+
+        if (radioButtonMedium.isSelected()) {
             heartNumber = 5;
             mode = 2;
-        } else if (checkBox2.isSelected()) {
+        } else if (radioButtonHard.isSelected()) {
             heartNumber = 1;
             mode = 3;
         } else {
+            // Default to Easy if no selection is made
+            heartNumber = 10;
+            mode = 1;
         }
 
         upgradeButton.setContentAreaFilled(false);
